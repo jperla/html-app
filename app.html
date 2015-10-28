@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+  var page;
+  var add_tags = function(element, tags) {
+    for (var t in tags) {
+      element.append("<li>" + t + "</li>");
+    }
+  };
+
+  var clear_page = function() {
+    $("#page").text(page);
+  };
+
+  function replace_all(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
+
+  var update_tag = function() {
+    var tag = $(this).text();
+    clear_page();
+    var html = $("#page").html();
+    var new_html = replace_all("&lt;" + tag, "<b>&lt;" + tag + "</b>", html);
+    $("#page").html(new_html);
+  };
+
+  $(function() {
+    var tags = <%TAGS%>;
+    page = <%HTML%>;
+    page = replace_all('<%LT%>', "<", page);
+
+    clear_page();
+    add_tags($("#tags"), tags);
+
+    $("body").on( "click", "li", update_tag);
+  });
+</script>
+</head>
+<body>
+<table style="table-layout:fixed;">
+<tr>
+<td id="tags" valign="top" style="width:200px; white-space: nowrap">
+</td>
+<td valign="top">
+<code id="page"></code>
+</td>
+</tr>
+</table>
+</body>
+</html>
