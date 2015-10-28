@@ -5,7 +5,7 @@
   var page;
   var add_tags = function(element, tags) {
     for (var t in tags) {
-      element.append("<li>" + t + "</li>");
+      element.append("<li><span>" + t + "</span> (" + tags[t] + ")</li>");
     }
   };
 
@@ -33,7 +33,7 @@
     clear_page();
     add_tags($("#tags"), tags);
 
-    $("body").on( "click", "li", update_tag);
+    $("body").on("click", "span", update_tag);
   });
 </script>
 </head>
